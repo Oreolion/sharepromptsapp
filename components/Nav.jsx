@@ -4,16 +4,23 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Nav = () => {
-  const isLoggedIn = true;
+  const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
+
   useEffect(() => {
-    const setProviders = async () => {
-      const response = await getProviders();
-      setProviders(response);
+    const fetchProviders = async () => {
+        try {
+            const response = await getProviders();
+            console.log(response); // Log the response
+            setProviders(response);
+          } catch (error) {
+            console.error("Error fetching providers:", error);
+          }
     };
-    setProviders();
+    fetchProviders();
   }, []);
+
   return (
     <nav className="flex-between w-full mb-16 pt-3">
       <Link href="/" className="flex gap-2 flex-center">
@@ -26,9 +33,10 @@ const Nav = () => {
         ></Image>
         <p className="logo_text">Promptopia</p>
       </Link>
-      {/* Mobile Nav */}
+      {/* {alert(providers)} */}
+      {/* Nav */}
       <div className="sm:flex hidden">
-        {isLoggedIn ? (
+        {session?.user ? (
           <div className="flex gap-3 md:gap-5">
             <Link href="/create-prompt" className="black_btn">
               Create Post
@@ -50,21 +58,23 @@ const Nav = () => {
           <>
             {providers &&
               Object.values(providers).map((provider) => {
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className="black_btn"
-                >
-                  Sign In
-                </button>;
+                return (
+                  <button
+                    type="button"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                    className="black_btn"
+                  >
+                    Sign In
+                  </button>
+                );
               })}
           </>
         )}
       </div>
       {/* Mobile navigation */}
       <div className="sm:hidden flex relative">
-        {isLoggedIn ? (
+        {session?.user ? (
           <div className="flex">
             <Image
               src="/assets/images/logo.svg"
@@ -90,11 +100,16 @@ const Nav = () => {
                 >
                   Create Prompt
                 </Link>
-                <button type="button" onClick={()=>{
+                <button
+                  type="button"
+                  onClick={() => {
                     setToggleDropdown(false);
                     signOut();
-                }}
-                className="mt-5 w-full black_btn">Sign Out</button>
+                  }}
+                  className="mt-5 w-full black_btn"
+                >
+                  Sign Out
+                </button>
               </div>
             )}
           </div>
@@ -102,14 +117,16 @@ const Nav = () => {
           <>
             {providers &&
               Object.values(providers).map((provider) => {
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => signIn(provider.id)}
-                  className="black_btn"
-                >
-                  Sign In
-                </button>;
+                return (
+                  <button
+                    type="button"
+                    key={provider.name}
+                    onClick={() => signIn(provider.id)}
+                    className="black_btn"
+                  >
+                    Sign In
+                  </button>
+                );
               })}
           </>
         )}
