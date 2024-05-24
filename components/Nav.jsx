@@ -46,7 +46,7 @@ const Nav = () => {
             </button>
             <Link href="/profile" className="black_btn">
               <Image
-                src="/assets/images/logo.svg"
+                src={session?.user.image}
                 height={37}
                 alt="profile"
                 width={37}
@@ -77,7 +77,7 @@ const Nav = () => {
         {session?.user ? (
           <div className="flex">
             <Image
-              src="/assets/images/logo.svg"
+              src={session?.user.image}
               height={37}
               alt="profile"
               width={37}
@@ -89,14 +89,14 @@ const Nav = () => {
                 <Link
                   href="/profile"
                   className="dropdown_link"
-                  onCLick={() => setToggleDropdown(false)}
+                  onClick={() => setToggleDropdown(false)}
                 >
                   My Profile
                 </Link>
                 <Link
                   href="/create-prompt"
                   className="dropdown_link"
-                  onCLick={() => setToggleDropdown(false)}
+                  onClick={() => setToggleDropdown(false)}
                 >
                   Create Prompt
                 </Link>
