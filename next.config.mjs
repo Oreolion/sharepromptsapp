@@ -1,7 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    // disable suspense and fallback in project
-    missingSuspenseWithCSRBailout: false,
 
   experimental: {
     appDir: true,
