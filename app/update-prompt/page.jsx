@@ -56,8 +56,8 @@ const EditPrompt = () => {
       setPost={setPost}
       submitting={submitting}
       handleSubmit={updatePrompt}
-    >
-    </Form>
+    
+    />
     </Suspense>
   );
 };
