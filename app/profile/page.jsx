@@ -43,9 +43,7 @@ const MyProfile = () => {
       }
     }
   };
-  useEffect(() => {
-    console.log("Posts updated:", posts);
-  }, [posts]);
+
   return (
     <Profile
       name="My"
